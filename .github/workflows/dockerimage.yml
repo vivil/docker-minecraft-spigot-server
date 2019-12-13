@@ -1,0 +1,27 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  DOCKER_UTC_PACKAGE_NAME: docker.pkg.github.com/${{ github.repository }}/minecraft-spigot-server
+  DOCKER_JA_PACKAGE_NAME: docker.pkg.github.com/${{ github.repository }}/minecraft-spigot-server-jp
+  SPIGOT_VER: 1.14.4
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: |
+        docker build . --file Dockerfile --build-arg SPIGOT_VER=$SPIGOT_VER --target UTC --tag $DOCKER_UTC_PACKAGE_NAME:$SPIGOT_VER
+        docker build . --file Dockerfile --build-arg SPIGOT_VER=$SPIGOT_VER --target JA_JP --tag $DOCKER_JA_PACKAGE_NAME:$SPIGOT_VER
+    - name: Login to Registries
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u vivil --password-stdin
+    - name: Push to GitHub Packages
+      run: |
+        docker push $DOCKER_UTC_PACKAGE_NAME:$SPIGOT_VER
+        docker push $DOCKER_JA_PACKAGE_NAME:$SPIGOT_VER
