@@ -1,4 +1,4 @@
-ARG SPIGOT_VER="1.15"
+ARG SPIGOT_VER="1.15.1"
 
 FROM openjdk:8-jdk-alpine AS spigot
 ARG SPIGOT_VER
