@@ -8,6 +8,12 @@ WORKDIR /build
 RUN apk --no-cache add git=2.20.2-r0
 RUN wget "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar" -O BuildTools.jar
 RUN java -Xmx1024M -jar BuildTools.jar --rev $SPIGOT_VER
+WORKDIR /plugins
+RUN mkdir WorldEdit
+RUN wget "https://edge.forgecdn.net/files/2844/696/worldedit-bukkit-7.1.0-beta-1.jar" .
+ADD plugins/* .
+RUN mkdir WorldGuard
+
 
 FROM openjdk:8-jre-alpine AS UTC
 
@@ -17,6 +23,8 @@ ENV MEMORY=1024M
 WORKDIR /minecraft
 COPY --from=spigot /build/spigot-${SPIGOT_VER}.jar ./spigot.jar
 COPY ./start.sh .
+RUN mkdir ./plugins
+ADD --from=spigot /plugins/* ./plugins/
 
 EXPOSE 25565
 ENTRYPOINT ["./start.sh"]
