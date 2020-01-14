@@ -10,8 +10,8 @@ RUN wget "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/ar
 RUN java -Xmx1024M -jar BuildTools.jar --rev $SPIGOT_VER
 WORKDIR /plugins
 RUN mkdir WorldEdit
-RUN wget "https://edge.forgecdn.net/files/2844/696/worldedit-bukkit-7.1.0-beta-1.jar" .
-ADD plugins/* .
+RUN wget "https://edge.forgecdn.net/files/2844/696/worldedit-bukkit-7.1.0-beta-1.jar"
+COPY plugins/* .
 RUN mkdir WorldGuard
 
 
@@ -24,7 +24,7 @@ WORKDIR /minecraft
 COPY --from=spigot /build/spigot-${SPIGOT_VER}.jar ./spigot.jar
 COPY ./start.sh .
 RUN mkdir ./plugins
-ADD --from=spigot /plugins/* ./plugins/
+COPY --from=spigot /plugins/* ./plugins/
 
 EXPOSE 25565
 ENTRYPOINT ["./start.sh"]
