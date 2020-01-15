@@ -11,8 +11,10 @@ RUN java -Xmx1024M -jar BuildTools.jar --rev $SPIGOT_VER
 WORKDIR /plugins
 RUN mkdir WorldEdit
 RUN wget "https://edge.forgecdn.net/files/2844/696/worldedit-bukkit-7.1.0-beta-1.jar"
-COPY plugins/* .
 RUN mkdir WorldGuard
+RUN wget "https://media.forgecdn.net/files/2855/477/worldguard-bukkit-7.0.2.jar"
+COPY plugins/* .
+
 
 
 FROM openjdk:8-jre-alpine AS UTC
@@ -25,6 +27,8 @@ COPY --from=spigot /build/spigot-${SPIGOT_VER}.jar ./spigot.jar
 COPY ./start.sh .
 RUN mkdir ./plugins
 COPY --from=spigot /plugins/* ./plugins/
+COPY ./ops.json .
+COPY ./server.properties .
 
 EXPOSE 25565
 ENTRYPOINT ["./start.sh"]
