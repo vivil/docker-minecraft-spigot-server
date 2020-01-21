@@ -16,5 +16,6 @@ if [ ! -e /minecraft/eula.txt ]; then
   fi
 fi
 
-sed -e "s/WORLDCONTAINER/$SAVE/g" /minecraft/bukkit.yml > /minecraft/bukkit.yml
+cp /minecraft/bukkit.yml /minecraft/bukkit.yml.org
+sed -e "s/WORLDCONTAINER/\/vol\/ver151\/2020_01_21/g" /minecraft/bukkit.yml.org > /minecraft/bukkit.yml
 java -Xmx${MEMORY} -jar /minecraft/spigot.jar nogui

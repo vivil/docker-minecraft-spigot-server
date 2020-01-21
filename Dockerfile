@@ -22,10 +22,10 @@ ENV MEMORY=1024M
 WORKDIR /minecraft
 COPY --from=spigot /build/spigot-${SPIGOT_VER}.jar ./spigot.jar
 COPY ./start.sh .
-RUN mkdir ./plugins
-COPY --from=spigot /plg/ ./plugins/
 COPY ./server.properties .
 COPY ./bukkit.yml .
+RUN mkdir ./plugins
+COPY --from=spigot /plg/ ./plugins/
 
 EXPOSE 25565
 ENTRYPOINT ["./start.sh"]
