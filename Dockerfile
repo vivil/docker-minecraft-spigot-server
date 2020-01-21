@@ -9,8 +9,6 @@ RUN apk --no-cache add git=2.20.2-r0
 RUN wget "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar" -O BuildTools.jar
 RUN java -Xmx1024M -jar BuildTools.jar --rev $SPIGOT_VER
 WORKDIR /plg
-#RUN mkdir WorldEdit
-#RUN mkdir WorldGuard
 COPY plugins/ ./
 RUN wget "https://edge.forgecdn.net/files/2844/696/worldedit-bukkit-7.1.0-beta-1.jar"
 RUN wget "https://media.forgecdn.net/files/2855/477/worldguard-bukkit-7.0.2.jar"
