@@ -8,7 +8,7 @@ on:
 env:
   DOCKER_UTC_PACKAGE_NAME: docker.pkg.github.com/${{ github.repository }}/minecraft-spigot-server
   DOCKER_JA_PACKAGE_NAME: docker.pkg.github.com/${{ github.repository }}/minecraft-spigot-server-jp
-  SPIGOT_VER: 1.15
+  SPIGOT_VER: 1.15.1
 
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
         docker build . --file Dockerfile --build-arg SPIGOT_VER=$SPIGOT_VER --target UTC --tag $DOCKER_UTC_PACKAGE_NAME:$SPIGOT_VER
         docker build . --file Dockerfile --build-arg SPIGOT_VER=$SPIGOT_VER --target JA_JP --tag $DOCKER_JA_PACKAGE_NAME:$SPIGOT_VER
     - name: Login to Registries
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u vivil --password-stdin
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u Outakyoutou --password-stdin
     - name: Push to GitHub Packages
       run: |
         docker push $DOCKER_UTC_PACKAGE_NAME:$SPIGOT_VER
