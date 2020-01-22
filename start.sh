@@ -16,10 +16,16 @@ if [ ! -e /minecraft/eula.txt ]; then
   fi
 fi
 
-cp /minecraft/bukkit.yml /minecraft/bukkit.yml.org
-sed -e "s/WORLDCONTAINER/${SAVE}/g" /minecraft/bukkit.yml.org > /minecraft/bukkit.yml
-echo "---DEBUG---"
-echo "1:${SAVE};"
-echo "2:s/WORLDCONTAINER/${SAVE}/g;"
-echo "---END---"
+if [ "$SAVE" == "" ]; then
+  echo ""
+  echo "Invalid SAVE parameter."
+  echo ""
+  exit 1
+else
+  echo ""
+  echo "DEBUG:save dir is :${SAVE}"
+  cp /minecraft/bukkit.yml /minecraft/bukkit.yml.org
+  sed -e "s/WORLDCONTAINER/${SAVE}/g" /minecraft/bukkit.yml.org > /minecraft/bukkit.yml
+fi
+
 java -Xmx${MEMORY} -jar /minecraft/spigot.jar nogui
