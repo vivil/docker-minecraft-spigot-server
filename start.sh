@@ -16,16 +16,20 @@ if [ ! -e /minecraft/eula.txt ]; then
   fi
 fi
 
-if [ "$SAVE" == "" ]; then
+if [ "$SAVEROOT" == "" ]; then
   echo ""
   echo "Invalid SAVE parameter."
   echo ""
   exit 1
 else
   echo ""
-  echo "DEBUG:save dir is :${SAVE}"
+  echo "DEBUG:SAVEROOT is :${SAVEROOT}"
+  echo "DEBUG:CLASS is :${CLASS}"
+  echo "DEBUG:DATE is :${DATE}"
+  echo "DEBUG:TIME is :${TIME}"
+  
   cp /minecraft/bukkit.yml /minecraft/bukkit.yml.org
-  sed -e "s/WORLDCONTAINER/${SAVE}/g" /minecraft/bukkit.yml.org > /minecraft/bukkit.yml
+  sed -e "s/WORLDCONTAINER/\/${SAVEROOT}\/${CLASS}\/${DATE}_${TIME}/g" /minecraft/bukkit.yml.org > /minecraft/bukkit.yml
 fi
 
 java -Xmx${MEMORY} -jar /minecraft/spigot.jar nogui
