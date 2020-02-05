@@ -23,7 +23,7 @@ settings:
   deprecated-verbose: default
   shutdown-message: Server closed
   minimum-api: none
-  world-container: WORLDCONTAINER
+  world-container: /vol
 spawn-limits:
   monsters: 70
   animals: 10
