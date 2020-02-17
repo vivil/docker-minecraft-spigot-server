@@ -24,8 +24,9 @@ COPY --from=spigot /build/spigot-${SPIGOT_VER}.jar ./spigot.jar
 COPY ./start.sh .
 COPY ./server.properties .
 COPY ./bukkit.yml .
-RUN mkdir ./plugins
+RUN mkdir -p ./plugins/PluginMetrics
 COPY --from=spigot /plg/ ./plugins/
+COPY ./config.yml ./plugins/PluginMetrics/
 
 EXPOSE 25565
 ENTRYPOINT ["./start.sh"]
