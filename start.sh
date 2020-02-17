@@ -16,4 +16,5 @@ if [ ! -e /minecraft/eula.txt ]; then
   fi
 fi
 
+cp -f /vol/whitelist.json /minecraft/
 java -Xmx${MEMORY} -jar /minecraft/spigot.jar nogui
